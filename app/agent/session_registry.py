@@ -2,6 +2,7 @@ from strands import Agent
 from strands.session import S3SessionManager
 from app.agent.rag_tool import college_handbook_lookup
 from app.agent.refund_tool import check_refund_documents_and_eligibility
+from app.agent.complaint_tool import log_anonymous_anti_ragging_complaint
 from app.services.prompt_service import PromptService
 from app.core.config import settings
 from app.core.logging import logger
@@ -26,6 +27,6 @@ def create_agent(session_id: str) -> Agent:
         agent_id=session_id,
         model=settings.BEDROCK_CHAT_MODEL,
         system_prompt=system_prompt,
-        tools=[college_handbook_lookup, check_refund_documents_and_eligibility],
+        tools=[college_handbook_lookup, check_refund_documents_and_eligibility, log_anonymous_anti_ragging_complaint],
         session_manager=session_manager
     )
