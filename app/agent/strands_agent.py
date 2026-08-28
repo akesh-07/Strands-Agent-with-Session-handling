@@ -1,16 +1,16 @@
-from app.agent.session_registry import get_or_create_agent
+from app.agent.session_registry import create_agent
 from app.core.logging import logger
 
-def ask_agent(session_id: str, question: str) -> str:
+async def ask_agent(session_id: str, question: str) -> str:
     """
-    Retrieves the Agent for a given session and runs it.
+    Retrieves the Agent for a given session and runs it asynchronously.
     """
     logger.info(f"Invoking Strands Agent for session: {session_id}")
     
-    agent = get_or_create_agent(session_id)
+    agent = create_agent(session_id)
     
     try:
-        response = agent(question)
+        response = await agent.invoke_async(question)
         
         # Extract text from the model's final message
         if hasattr(response, 'message') and hasattr(response.message, 'content'):

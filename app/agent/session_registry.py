@@ -1,11 +1,12 @@
 from strands import Agent
 from strands.session import S3SessionManager
 from app.agent.rag_tool import college_handbook_lookup
+from app.agent.refund_tool import check_refund_documents_and_eligibility
 from app.services.prompt_service import PromptService
 from app.core.config import settings
 from app.core.logging import logger
 
-def get_or_create_agent(session_id: str) -> Agent:
+def create_agent(session_id: str) -> Agent:
     """
     Creates a new Strands Agent for a given session ID using S3SessionManager.
     Conversation history is automatically managed via the S3 bucket.
@@ -25,6 +26,6 @@ def get_or_create_agent(session_id: str) -> Agent:
         agent_id=session_id,
         model=settings.BEDROCK_CHAT_MODEL,
         system_prompt=system_prompt,
-        tools=[college_handbook_lookup],
+        tools=[college_handbook_lookup, check_refund_documents_and_eligibility],
         session_manager=session_manager
     )

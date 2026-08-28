@@ -7,7 +7,7 @@ from app.core.exceptions import AppBaseException
 router = APIRouter()
 
 @router.post("/ask", response_model=AnswerResponse)
-def ask_question(request: QuestionRequest):
+async def ask_question(request: QuestionRequest):
     """
     Description
 
@@ -28,7 +28,7 @@ def ask_question(request: QuestionRequest):
         
     try:
         # Call the Strands agent, passing session_id and question
-        answer_text = ask_agent(request.session_id, request.question)
+        answer_text = await ask_agent(request.session_id, request.question)
         return AnswerResponse(answer=answer_text)
     except AppBaseException as e:
         raise e
