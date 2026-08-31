@@ -30,3 +30,20 @@ def create_agent(session_id: str) -> Agent:
         tools=[college_handbook_lookup, check_refund_documents_and_eligibility, log_anonymous_anti_ragging_complaint],
         session_manager=session_manager
     )
+
+def create_reviewer_agent(session_id: str) -> Agent:
+    """Creates a secondary Compliance Officer Agent to review drafts."""
+    logger.info(f"Creating new Reviewer Agent for session: {session_id}")
+    
+    system_prompt = """You are a strict compliance officer for a college.
+    Your job is to review the drafted responses written by the primary assistant.
+    Ensure the response is polite, helpful, and does not leak personal or sensitive identifying information.
+    If the response is good, reply ONLY with the exact word 'APPROVED'.
+    If the response has issues, reply with 'REJECTED:' followed by the reason why it was rejected."""
+    
+    return Agent(
+        agent_id=f"{session_id}-reviewer",
+        model=settings.BEDROCK_CHAT_MODEL,
+        system_prompt=system_prompt,
+        tools=[] # The reviewer has no tools
+    )

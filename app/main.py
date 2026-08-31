@@ -4,9 +4,25 @@ from app.api import health, ingest, rag
 from app.core.exceptions import AppBaseException
 from app.core.logging import logger
 
+import time
+
 app = FastAPI(
     title="College RAG Assistant"
 )
+
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    """Middleware to manually log all incoming requests."""
+    start_time = time.time()
+    response = await call_next(request)
+    process_time = time.time() - start_time
+    client_host = request.client.host if request.client else "127.0.0.1"
+    logger.info(f"{client_host} - \"{request.method} {request.url.path}\" {response.status_code} ({process_time:.3f}s)")
+    return response
+
+@app.on_event("startup")
+async def startup_event():
+    logger.info("College RAG Assistant Server is starting up. Logging is active!")
 
 # Exception handlers
 @app.exception_handler(AppBaseException)
