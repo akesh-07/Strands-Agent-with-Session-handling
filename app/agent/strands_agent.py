@@ -1,6 +1,13 @@
-from app.agent.session_registry import create_agent, create_reviewer_agent
+from app.agent.session_registry import (
+    create_router_agent, 
+    create_academic_agent, 
+    create_refund_agent, 
+    create_anti_ragging_agent, 
+    create_reviewer_agent
+)
+from app.services.prompt_service import PromptService
 from app.core.logging import logger
-
+    
 def _extract_text(response) -> str:
     """Helper to extract text from the Bedrock response."""
     if hasattr(response, 'message') and hasattr(response.message, 'content'):
@@ -19,18 +26,32 @@ async def ask_agent(session_id: str, question: str) -> str:
     """
     logger.info(f"Invoking Strands Agent for session: {session_id}")
     
-    primary_agent = create_agent(session_id)
+    # 1. Route the query
+    router_agent = create_router_agent()
+    logger.info(f"[USER]: {question}")
+    router_response = await router_agent.invoke_async(question)
+    category = _extract_text(router_response).strip().upper()
+    logger.info(f"[ROUTER CLASSIFICATION]: {category}")
+    
+    # 2. Select specialist
+    if "REFUND" in category:
+        primary_agent = create_refund_agent(session_id)
+    elif "SAFETY" in category:
+        primary_agent = create_anti_ragging_agent(session_id)
+    else:
+        primary_agent = create_academic_agent(session_id)
+        
     reviewer_agent = create_reviewer_agent(session_id)
     
     try:
-        # 1. Primary agent drafts a response
-        logger.info(f"[USER]: {question}")
+        # 3. Domain specialist drafts a response
         response = await primary_agent.invoke_async(question)
         draft_text = _extract_text(response)
         logger.info(f"[PRIMARY AGENT DRAFT]:\n{draft_text}")
         
         # 2. Reviewer checks the draft
-        review_prompt = f"Please review this drafted response: '{draft_text}'. If it is safe and polite, reply exactly 'APPROVED'. If not, reply 'REJECTED: [reason]'."
+        prompt_service = PromptService()
+        review_prompt = prompt_service.build_reviewer_task_prompt(draft_text)
         review_response = await reviewer_agent.invoke_async(review_prompt)
         review_text = _extract_text(review_response)
         logger.info(f"[COMPLIANCE OFFICER REVIEW]:\n{review_text}")
@@ -38,7 +59,7 @@ async def ask_agent(session_id: str, question: str) -> str:
         # 3. Handle rejection (single retry)
         if "APPROVED" not in review_text:
             logger.info("[SYSTEM]: Draft rejected! Forcing Primary Agent to fix it...")
-            fix_prompt = f"The compliance officer rejected your draft with this feedback: '{review_text}'. Please provide a revised response fixing these issues."
+            fix_prompt = prompt_service.build_reviewer_fix_prompt(review_text)
             final_response = await primary_agent.invoke_async(fix_prompt)
             final_text = _extract_text(final_response)
             logger.info(f"[PRIMARY AGENT REVISED]:\n{final_text}")

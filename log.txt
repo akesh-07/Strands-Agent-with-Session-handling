@@ -159,3 +159,98 @@ APPROVED
 
 2026-09-01 11:03:42,261 - INFO - [SYSTEM]: Draft approved! Sending to user.
 2026-09-01 11:03:42,266 - INFO - 127.0.0.1 - "POST /ask" 200 (6.385s)
+2026-09-01 11:54:45,691 - INFO - College RAG Assistant Server is starting up. Logging is active!
+2026-09-01 11:55:05,163 - INFO - College RAG Assistant Server is starting up. Logging is active!
+2026-09-01 11:55:24,718 - INFO - Invoking Strands Agent for session: test-router-1
+2026-09-01 11:55:24,912 - INFO - [USER]: I want to get a refund of my fees.
+2026-09-01 11:55:25,886 - INFO - [ROUTER CLASSIFICATION]: REFUND
+2026-09-01 11:55:25,887 - INFO - Creating Refund Agent for session: test-router-1
+2026-09-01 11:55:27,105 - INFO - Creating new Reviewer Agent for session: test-router-1
+2026-09-01 11:55:29,420 - INFO - [PRIMARY AGENT DRAFT]:
+<thinking>To process the refund request, I need to know the student's withdrawal date, the last date of admission, and the documents they have ready. I will ask the student to provide this information.</thinking>
+
+Hello, I'd be happy to assist you with your fee refund request. To begin, could you please provide the following information:
+1. The date you withdrew from the college, in YYYY-MM-DD format.
+2. The last date of admission, in YYYY-MM-DD format.
+3. A list of documents you have ready, including any that are required for processing the refund.
+
+Once I have this information, I can check your refund eligibility and inform you of any missing documents.
+
+2026-09-01 11:55:30,306 - INFO - [COMPLIANCE OFFICER REVIEW]:
+APPROVED
+
+2026-09-01 11:55:30,306 - INFO - [SYSTEM]: Draft approved! Sending to user.
+2026-09-01 11:55:30,315 - INFO - 127.0.0.1 - "POST /ask" 200 (5.601s)
+2026-09-01 12:10:49,625 - INFO - College RAG Assistant Server is starting up. Logging is active!
+2026-09-01 12:11:18,907 - INFO - College RAG Assistant Server is starting up. Logging is active!
+2026-09-01 12:11:57,089 - INFO - College RAG Assistant Server is starting up. Logging is active!
+2026-09-01 12:12:08,173 - INFO - College RAG Assistant Server is starting up. Logging is active!
+2026-09-01 12:16:26,667 - INFO - College RAG Assistant Server is starting up. Logging is active!
+2026-09-01 12:17:01,622 - INFO - Invoking Strands Agent for session: 23
+2026-09-01 12:17:01,833 - INFO - [USER]: Am I eligible for a fee refund
+2026-09-01 12:17:02,762 - INFO - [ROUTER CLASSIFICATION]: REFUND
+2026-09-01 12:17:02,762 - INFO - Creating Refund Agent for session: 23
+2026-09-01 12:17:04,133 - INFO - Creating new Reviewer Agent for session: 23
+2026-09-01 12:17:06,260 - INFO - [PRIMARY AGENT DRAFT]:
+<thinking>To determine the eligibility for a fee refund, I need to know the date you withdrew, the last date of admission, and the documents you have submitted. Please provide these details so I can check your eligibility.</thinking>
+
+Could you please provide the following information:
+1. The date you withdrew, in YYYY-MM-DD format.
+2. The formally notified last date of admission, in YYYY-MM-DD format.
+3. A list of documents you have ready to submit.
+
+2026-09-01 12:17:07,183 - INFO - [COMPLIANCE OFFICER REVIEW]:
+APPROVED
+
+2026-09-01 12:17:07,183 - INFO - [SYSTEM]: Draft approved! Sending to user.
+2026-09-01 12:17:07,185 - INFO - 127.0.0.1 - "POST /ask" 200 (5.566s)
+2026-09-01 12:18:13,691 - INFO - Invoking Strands Agent for session: 23
+2026-09-01 12:18:13,868 - INFO - [USER]: 2026-09-01 is withdraw date , 2026-08-20 is last date for admission , i have fee receipt, id card
+2026-09-01 12:18:14,837 - INFO - [ROUTER CLASSIFICATION]: REFUND
+2026-09-01 12:18:14,837 - INFO - Creating Refund Agent for session: 23
+2026-09-01 12:18:16,470 - INFO - Creating new Reviewer Agent for session: 23
+2026-09-01 12:18:18,577 - INFO - Running check_refund_documents_and_eligibility for withdrawal_date: 2026-09-01, last_date_of_admission: 2026-08-20
+2026-09-01 12:18:20,460 - INFO - [PRIMARY AGENT DRAFT]:
+<thinking>Based on the tool's result, the student is eligible for an 80% refund of the academic fee, as the withdrawal date is 12 days after the last date of admission. However, there are still some mandatory documents missing that need to be submitted for the refund process to be completed.</thinking>
+
+Dear student,
+
+Your withdrawal is 12 days after the last date of admission, which makes you eligible for an 80% refund of the academic fee. However, you still need to submit the following mandatory documents to complete the refund process:
+
+1. Refund application form
+2. Written request for cancellation/withdrawal
+3. Admission confirmation letter
+4. Fee payment receipt
+5. Student identity card
+6. Bank account details with cancelled cheque/passbook copy
+
+Please gather these documents and submit them as soon as possible to ensure a smooth refund process. If you have any questions or need further assistance, feel free to ask.
+
+2026-09-01 12:18:21,291 - INFO - [COMPLIANCE OFFICER REVIEW]:
+APPROVED
+
+2026-09-01 12:18:21,291 - INFO - [SYSTEM]: Draft approved! Sending to user.
+2026-09-01 12:18:21,296 - INFO - 127.0.0.1 - "POST /ask" 200 (7.605s)
+2026-09-01 12:20:55,502 - INFO - Invoking Strands Agent for session: 23
+2026-09-01 12:20:55,674 - INFO - [USER]: I want to report an incident of ragging
+2026-09-01 12:20:56,745 - INFO - [ROUTER CLASSIFICATION]: SAFETY
+2026-09-01 12:20:56,754 - INFO - Creating Anti-Ragging Agent for session: 23
+2026-09-01 12:20:58,623 - INFO - Creating new Reviewer Agent for session: 23
+2026-09-01 12:21:00,772 - INFO - Running log_anonymous_anti_ragging_complaint tool.
+2026-09-01 12:21:01,415 - INFO - Successfully logged anonymous complaint. Ticket ID: f3368507-4683-430a-9f74-b0165ef35988
+2026-09-01 12:21:03,573 - INFO - [PRIMARY AGENT DRAFT]:
+<thinking>The tool has successfully logged the User's complaint anonymously, and a tracking ticket ID has been provided. I will inform the User about this and provide them with the necessary details.</thinking>
+
+Dear User,
+
+Your complaint about the incident of ragging has been successfully and anonymously logged to the Anti-Ragging Committee. Please save the following tracking ticket ID for any future reference or follow-up:
+
+**Tracking Ticket ID: f3368507-4683-430a-9f74-b0165ef35988**
+
+The Anti-Ragging Committee will review your complaint and take appropriate action. If you need any further assistance or have any questions, please feel free to reach out to us. We are here to support you and ensure a safe and harassment-free environment on campus.
+
+2026-09-01 12:21:04,471 - INFO - [COMPLIANCE OFFICER REVIEW]:
+APPROVED
+
+2026-09-01 12:21:04,472 - INFO - [SYSTEM]: Draft approved! Sending to user.
+2026-09-01 12:21:04,474 - INFO - 127.0.0.1 - "POST /ask" 200 (8.973s)

@@ -1,0 +1,1 @@
+Please review this drafted response: '{draft_text}'. If it is safe and polite, reply exactly 'APPROVED'. If not, reply 'REJECTED: [reason]'.
