@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from app.models.request import QuestionRequest
 from app.models.response import AnswerResponse
-from app.agent.strands_agent import ask_agent
+from app.orchestrator.supervisor import ask_agent
 from app.core.exceptions import AppBaseException
 
 router = APIRouter()

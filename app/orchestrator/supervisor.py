@@ -1,4 +1,4 @@
-from app.agent.session_registry import (
+from app.agents.session_registry import (
     create_router_agent, 
     create_academic_agent, 
     create_refund_agent, 
