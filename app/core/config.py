@@ -14,6 +14,9 @@ class Settings(BaseSettings):
     TOP_K: int = 5
     LOG_LEVEL: str = "INFO"
     S3_BUCKET: str | None = None
+    USE_OPENSEARCH: bool = False
+    OPENSEARCH_HOST: str | None = None
+    OPENSEARCH_INDEX_NAME: str = "college-handbook"
 
     class Config:
         env_file = ".env"

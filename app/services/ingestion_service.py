@@ -6,7 +6,9 @@ from app.providers.parser.pdf_parser import PDFParser
 from app.providers.parser.text_cleaner import TextCleaner
 from app.providers.parser.chunker import TextChunker
 from app.providers.bedrock.embeddings import BedrockEmbeddings
+from app.core.config import settings
 from app.vectorstore.faiss_store import FAISSStore
+from app.vectorstore.opensearch_store import OpenSearchStore
 from app.models.response import IngestResponse
 
 class IngestionService:
@@ -14,7 +16,10 @@ class IngestionService:
         """Initializes the ingestion service dependencies."""
         self.raw_dir = "data/raw"
         self.embeddings = BedrockEmbeddings()
-        self.vector_store = FAISSStore()
+        if settings.USE_OPENSEARCH:
+            self.vector_store = OpenSearchStore()
+        else:
+            self.vector_store = FAISSStore()
 
     def ingest_all(self) -> IngestResponse:
         """Orchestrates parsing PDFs, chunking text, embedding, and indexing into FAISS."""
